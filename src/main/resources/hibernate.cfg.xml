@@ -19,7 +19,6 @@
         <property name="hibernate.c3p0.max_statements">50</property>
         <mapping resource="User.hbm.xml"/>
         <mapping resource="UserNotification.hbm.xml"/>
-        <mapping resource="SystemNotification.hbm.xml"/>
         <mapping resource="Role.hbm.xml"/>
         <mapping resource="Notification.hbm.xml"/>
         <mapping resource="LastViewNotification.hbm.xml"/>

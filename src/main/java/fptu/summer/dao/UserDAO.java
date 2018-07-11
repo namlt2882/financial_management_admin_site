@@ -101,17 +101,9 @@ public class UserDAO extends DAO {
 
     public User findByUsername(String username) {
         try {
-            List<User> l = getSession()
+            return (User) getSession()
                     .createCriteria(User.class)
-                    //                    .createAlias("u.roles", "roles", JoinType.INNER_JOIN)
-                    .add(Restrictions.eq("username", username)).list();
-            if (l != null && !l.isEmpty()) {
-                User user = l.get(0);
-                user.getRoles().size();
-                return user;
-            } else {
-                return null;
-            }
+                    .add(Restrictions.eq("username", username)).uniqueResult();
         } finally {
             close();
         }

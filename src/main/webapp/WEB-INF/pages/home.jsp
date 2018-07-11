@@ -26,8 +26,13 @@
         </form>
         <a href="noti_add">Add new notification</a><br/>
         <a href="noti">View system notifications</a>
-        <c:if test="${not empty users or not empty user}">
-            <h3>Current user: ${numberOfUser}</h3>
+        <c:if test="${not empty users}">
+            <c:if test="${empty param.username}">
+                <h3>Current user: ${numberOfUser}</h3>
+            </c:if>
+            <c:if test="${not empty param.username}">
+                <h3>Result for username: ${param.username}</h3>
+            </c:if>
             <table>
                 <tr>
                     <th>No.</th>
@@ -53,28 +58,29 @@
                                 ${user.status == 1?"<font style='color:green'>ENABLE</font>":"<font style='color:red'>DISABLE</font>"}
                             </td>
                             <td>
-                                <form action="noti_add">
-                                    <input type="hidden" name="username" value="${user.username}">
-                                    <input type="submit" value="Send notification">
-                                </form>
+                                <c:if test="${user.status==1}">
+                                    <form action="noti_add">
+                                        <input type="hidden" name="username" value="${user.username}">
+                                        <input type="submit" value="Send notification">
+                                    </form><br/>
+                                    <form action="disable">
+                                        <input type="hidden" name="username" value="${user.username}">
+                                        <input type="submit" value="Disable">
+                                    </form>
+                                </c:if>
+                                <c:if test="${user.status==0}">
+                                    <form action="enable">
+                                        <input type="hidden" name="username" value="${user.username}">
+                                        <input type="submit" value="Enable">
+                                    </form>
+                                </c:if>
                             </td>
                         </tr>
                     </c:forEach>
 
                 </c:if>
-                <c:if test="${not empty user}">
-                    <tr>
-                        <td>1</td>
-                        <td>${user.username}</td>
-                        <td>${user.firstName}</td>
-                        <td>${user.lastName}</td>
-                        <td>${user.insertDate}</td>
-                        <td></td>
-                    </tr>
-
-                </c:if>
             </table>
-            <c:if test="${not empty users}">
+            <c:if test="${empty param.username}">
                 <div>
                     Pages: 
                     <c:forEach begin="1" end="${pageQuantity}" varStatus="counter">

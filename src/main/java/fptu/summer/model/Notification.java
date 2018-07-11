@@ -15,8 +15,14 @@ public class Notification implements java.io.Serializable {
     private Date insertDate;
     private Date lastUpdate;
     private int status;
+    private int userId;
 
     public Notification() {
+    }
+
+    public Notification(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     public Long getId() {
@@ -73,6 +79,14 @@ public class Notification implements java.io.Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
 }
