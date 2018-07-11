@@ -7,9 +7,12 @@ package fptu.summer.dao;
 
 import fptu.summer.model.Role;
 import fptu.summer.model.User;
+import fptu.summer.model.enumeration.UserStatus;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -67,6 +70,35 @@ public class UserDAO extends DAO {
         }
     }
 
+    public List<User> findUserInRange(Integer firstResult, Integer maxResult) {
+        try {
+            Criteria criteria = getSession().createCriteria(User.class, "user")
+                    .createAlias("user.roles", "role", Criteria.INNER_JOIN)
+                    .add(Restrictions.eq("role.id", 2))
+                    .addOrder(Order.desc("user.insertDate"));
+            if (firstResult != null) {
+                criteria.setFirstResult(firstResult);
+            }
+            if (maxResult != null) {
+                criteria.setMaxResults(maxResult);
+            }
+            return criteria.list();
+        } finally {
+            close();
+        }
+    }
+
+    public long count() {
+        try {
+            return (long) getSession().createCriteria(User.class, "user")
+                    .createAlias("user.roles", "role", Criteria.INNER_JOIN)
+                    .add(Restrictions.eq("role.id", 2))
+                    .setProjection(Projections.rowCount()).uniqueResult();
+        } finally {
+            close();
+        }
+    }
+
     public User findByUsername(String username) {
         try {
             List<User> l = getSession()
@@ -92,6 +124,5 @@ public class UserDAO extends DAO {
             close();
         }
     }
-
 
 }
