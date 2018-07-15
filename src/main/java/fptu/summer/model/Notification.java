@@ -15,7 +15,7 @@ public class Notification implements java.io.Serializable {
     private Date insertDate;
     private Date lastUpdate;
     private int status;
-    private int userId;
+    private Integer userId;
 
     public Notification() {
     }

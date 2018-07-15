@@ -63,16 +63,6 @@
                                         <input type="hidden" name="username" value="${user.username}">
                                         <input type="submit" value="Send notification">
                                     </form><br/>
-                                    <form action="disable">
-                                        <input type="hidden" name="username" value="${user.username}">
-                                        <input type="submit" value="Disable">
-                                    </form>
-                                </c:if>
-                                <c:if test="${user.status==0}">
-                                    <form action="enable">
-                                        <input type="hidden" name="username" value="${user.username}">
-                                        <input type="submit" value="Enable">
-                                    </form>
                                 </c:if>
                             </td>
                         </tr>
