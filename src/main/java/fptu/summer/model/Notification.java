@@ -81,11 +81,11 @@ public class Notification implements java.io.Serializable {
         this.status = status;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

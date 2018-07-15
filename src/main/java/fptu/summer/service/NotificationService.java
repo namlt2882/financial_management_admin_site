@@ -28,6 +28,7 @@ public class NotificationService {
         } else {
             //system notification
             notification.setIsSystemNotification(true);
+            notification.setUserId(null);
         }
         notification.setStatus(NotificationStatus.ENABLE.getStatus());
         Date currentDate = new Date();
