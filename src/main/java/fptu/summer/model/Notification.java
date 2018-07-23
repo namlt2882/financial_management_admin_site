@@ -15,7 +15,8 @@ public class Notification implements java.io.Serializable {
     private Date insertDate;
     private Date lastUpdate;
     private int status;
-    private Integer userId;
+//    private Integer userId;
+    private User user;
 
     public Notification() {
     }
@@ -81,12 +82,20 @@ public class Notification implements java.io.Serializable {
         this.status = status;
     }
 
-    public Integer getUserId() {
-        return userId;
+//    public Integer getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Integer userId) {
+//        this.userId = userId;
+//    }
+
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

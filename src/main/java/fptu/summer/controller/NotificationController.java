@@ -5,10 +5,12 @@
  */
 package fptu.summer.controller;
 
+import static fptu.summer.controller.HomeController.PAGE_SIZE;
 import fptu.summer.model.Notification;
 import fptu.summer.model.User;
 import fptu.summer.service.NotificationService;
 import fptu.summer.service.UserService;
+import java.util.List;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class NotificationController {
+
+    public static int PAGE_SIZE = 10;
 
     @Secured({"ROLE_ADMIN"})
     @GetMapping(value = "noti_add")
@@ -62,4 +66,35 @@ public class NotificationController {
             return "redirect:/noti_add" + ("".equals(username) ? "" : "?username=" + username);
         }
     }
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping(value = "noti_view")
+    public String getNotiViewPage(ModelMap modelMap, @RequestParam Long id) {
+        modelMap.addAttribute("noti", new NotificationService().findById(id));
+        return "noti_view";
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @GetMapping(value = "noti")
+    public String getViewNotiPage(ModelMap modelMap,
+            @RequestParam(required = false, defaultValue = "false") boolean isFilter,
+            @RequestParam(required = false, defaultValue = "false") boolean isSystemNotification,
+            @RequestParam(required = false, defaultValue = "1") Integer startPage,
+            @RequestParam(required = false) String username) {
+        NotificationService notificationService = new NotificationService();
+        List<Notification> notiList = notificationService
+                .findInRange((startPage - 1) * PAGE_SIZE, PAGE_SIZE, isFilter, isSystemNotification, username);
+        modelMap.addAttribute("notifications", notiList);
+        long numOfNotification = notificationService.countNotification(isFilter, isSystemNotification, username);
+        modelMap.addAttribute("pageQuantity", Math.ceil(numOfNotification * 1.0 / PAGE_SIZE));
+        return "noti";
+    }
+
+    @Secured({"ROLE_ADMIN"})
+    @PostMapping(value = "noti_delete")
+    public String deleteNotification(@RequestParam Long id, @RequestParam String oldUrl) {
+        new NotificationService().disable(id);
+        return "redirect:/"+oldUrl;
+    }
+
 }

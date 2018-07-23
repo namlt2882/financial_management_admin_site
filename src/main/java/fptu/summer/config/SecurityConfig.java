@@ -47,9 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     HttpServletResponse response, AuthenticationException ae)
                     throws IOException, ServletException {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                try (PrintWriter pw = response.getWriter();) {
-                    pw.write("Unauthorized");
-                }
+                response.sendRedirect("index");
             }
         };
     }

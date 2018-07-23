@@ -26,8 +26,11 @@
         <property name="status" type="int">
             <column name="status" not-null="true" />
         </property>
-        <property name="userId" type="int">
+<!--        <property name="userId" type="int">
             <column name="user_id" not-null="false" />
-        </property>
+        </property>-->
+        <many-to-one name="user" class="fptu.summer.model.User" fetch="select" lazy="false">
+            <column name="user_id" not-null="true" />
+        </many-to-one>
     </class>
 </hibernate-mapping>
