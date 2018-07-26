@@ -107,7 +107,7 @@
                 <configuration>
                     <hostName>localhost</hostName>
                     <port>9998</port>
-                    <path>/music-store</path>
+                    <path>/admin</path>
                 </configuration>
             </plugin>
         </plugins>

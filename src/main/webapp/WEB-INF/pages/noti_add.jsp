@@ -11,54 +11,53 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Send notification</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>Send notification</h1>
-        <a href="home">Home</a>
-        <c:if test="${empty param.username}">
-            <br/>
-            <a href="noti">View system notifications</a>
-        </c:if>
-        <form action="noti_add" method="POST">
-            <table>
-                <tr>
-                    <td>For:</td>
-                    <td>
-                        <c:if test="${not empty param.username}">
-                            <input type="hidden" name="username" value="${user.username}">
-                            ${user.username}
-                            (<font style="color: blue">
-                            <c:out value="${user.lastName} ${user.firstName}"></c:out>
-                                </font>)
-                        </c:if>
-                        <c:if test="${empty param.username}">
-                            <font style="color: blue">USERS OF SYSTEM</font>
-                        </c:if>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Title:</td>
-                    <td><input type="text" name="title"></td>
-                </tr>
-                <tr>
-                    <td>Content:</td>
-                    <td><textarea rows="8" cols="60" name="content"></textarea></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" value="Send" onclick="return confirm('Are you sure?');"></td>
-                </tr>
-                <c:if test="${not empty param.msg}">
-                    <tr>
-                        <td></td>
-                        <td>
-                            <pre>
-            <font style="color: red">${param.msg}</font>
-                            </pre>
-                        </td>
-                    </tr>
+        <div class="container">
+            <%@include file="header.jsp" %>
+            <div class="container col-md-offset-4"><h1>Send notification</h1>            </div>  
+
+            <div class="col-md-8 col-md-offset-2">   
+            <form action="noti_add" method="POST">
+                 <div class="panel-heading"><h4>For : <c:if test="${not empty param.username}">
+                    <input type="hidden" name="username" value="${user.username}">
+                    ${user.username}
+                    (<font style="color: blue">
+                    <c:out value="${user.lastName} ${user.firstName}"></c:out>
+                        </font>)
                 </c:if>
-            </table>
-        </form>
+                <c:if test="${empty param.username}">
+                    <font style="color: blue">USERS OF SYSTEM</font>
+                </c:if></h4></div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control " id="title" name="title">
+                </div>
+                <div class="form-group">
+                    <label for="content">Content</label>
+                    <textarea class="form-control" rows="5" id="comment" name="content"></textarea>
+                </div>
+                <Button class="btn btn-success" type="submit" value="Send" onclick="return confirm('Are you sure?');">Send</button>
+                <table> <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <c:if test="${not empty param.msg}">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <pre>
+            <font style="color: red">${param.msg}</font>
+                                </pre>
+                            </td>
+                        </tr>
+                    </c:if>
+                </table>
+            </form>
+            </div>
+        </div>
     </body>
 </html>
